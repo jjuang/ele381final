@@ -14,35 +14,59 @@
     </script>
 
     <script type="text/javascript">
-    function initialize() {
-      var heatmapData = [
+    var map;
+    var heatmap;
+    var heatmapData = [
       new google.maps.LatLng(40.3456455, -74.6558775),
       new google.maps.LatLng(40.3456456, -74.6558772),
       ];
 
+    function initialize() {
       // Initalize the map of Princeton
       var mapOptions = {
           center: { lat: 40.3456455, lng: -74.6558775},
           zoom: 17
         };
 
-      var map = new google.maps.Map(document.getElementById('map-canvas'),
+      map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
 
       // Initialize the heatmap
-      var heatmap = new google.maps.visualization.HeatmapLayer({
+      heatmap = new google.maps.visualization.HeatmapLayer({
         data: heatmapData,
         map: map
       });
 
       heatmap.setMap(map);
+
+      updateHeatmap();
     }
 
-    //TODO: read data in by csv
-    
+
+    // TODO: read from csv file. time will equal column number
+    // the values will be weights
+    function getNewData(time) {
+      var latitude = 40.3456455 + time;
+      var longitude = -74.6558775;
+      return [new google.maps.LatLng(latitude, longitude)];
+    }
+
+    // Redraws the heatmap once every 100 milliseconds.
+    // This will be used to visualize changes in the heatmap over time.
+    // Currently it adds a small constant to the longitude as a test 
+    // so we can see it moving.
+    function updateHeatmap() {
+      var counter = 0;
+      window.setInterval(function() {
+        heatmap.setData(getNewData(counter));
+        counter = counter + 0.000001;
+      }, 100);
+
+    }
 
 
     google.maps.event.addDomListener(window, 'load', initialize);
+    
 
     </script>
   </head>
