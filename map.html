@@ -2,24 +2,52 @@
 <html>
   <head>
     <style type="text/css">
-      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
     </style>
+
     <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmUz5sQxG_Fh39gX_ZWEr6oFLewa4wecc">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmUz5sQxG_Fh39gX_ZWEr6oFLewa4wecc">
     </script>
+
+    <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?libraries=visualization">
+    </script>
+
     <script type="text/javascript">
-      function initialize() {
-        var mapOptions = {
+    function initialize() {
+      var heatmapData = [
+      new google.maps.LatLng(40.3456455, -74.6558775),
+      new google.maps.LatLng(40.3456456, -74.6558772),
+      ];
+
+      // Initalize the map of Princeton
+      var mapOptions = {
           center: { lat: 40.3456455, lng: -74.6558775},
           zoom: 17
         };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
+
+      var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
+
+      // Initialize the heatmap
+      var heatmap = new google.maps.visualization.HeatmapLayer({
+        data: heatmapData,
+        map: map
+      });
+
+      heatmap.setMap(map);
+    }
+
+    //TODO: read data in by csv
+    
+
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
     </script>
   </head>
+
   <body>
-<div id="map-canvas"></div>
+    <div id="map-canvas"></div>
   </body>
 </html>
