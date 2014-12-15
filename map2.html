@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Heatmaps</title>
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+      #panel {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -180px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+    </style>
+    <!-- Load API KEY -->
+    <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmUz5sQxG_Fh39gX_ZWEr6oFLewa4wecc">
+    </script>
+
+    <!-- Load visualization library -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization"></script>
+    <script>
+
+// Princeton Locations
+var map, pointarray, heatmap;
+
+var networkLocations = [
+   {location: new google.maps.LatLng(40.347607,-74.6612695), weight: 5551223481
+},
+   new google.maps.LatLng(40.33316,-74.657092),
+   new google.maps.LatLng(40.344822,-74.659381),
+   new google.maps.LatLng(40.348132,-74.662064),
+   new google.maps.LatLng(40.347374,-74.659319),
+   new google.maps.LatLng(40.346376,-74.655264),
+   new google.maps.LatLng(40.349499,-74.653675),
+   new google.maps.LatLng(40.344554,-74.654467),
+   new google.maps.LatLng(40.344198,-74.65148),
+   new google.maps.LatLng(40.346034,-74.650037),
+   new google.maps.LatLng(40.346158,-74.657446),
+   new google.maps.LatLng(40.345234,-74.653857),
+   new google.maps.LatLng(40.34349,-74.655985),
+   new google.maps.LatLng(40.349757,-74.650351),
+   new google.maps.LatLng(40.346817,-74.660251),
+   new google.maps.LatLng(40.344675,-74.65824),
+   new google.maps.LatLng(40.347142,-74.657859),
+   new google.maps.LatLng(40.340999,-74.657859),
+   new google.maps.LatLng(40.340801,-74.665806),
+   new google.maps.LatLng(40.34215,-74.660942),
+   new google.maps.LatLng(40.350481,-74.649161),
+   new google.maps.LatLng(40.347482,-74.660188),
+   new google.maps.LatLng(40.348747,-74.658499),
+   new google.maps.LatLng(40.345865,-74.660676),
+   new google.maps.LatLng(40.345824,-74.65242),
+   new google.maps.LatLng(40.332915,-74.657145),
+   new google.maps.LatLng(40.344453,-74.653287),
+   new google.maps.LatLng(40.350719,-74.650544),
+   new google.maps.LatLng(40.343447,-74.648701),
+   new google.maps.LatLng(40.345872,-74.660142),
+   new google.maps.LatLng(40.34613,-74.656942),
+   new google.maps.LatLng(40.348347,-74.654724),
+   new google.maps.LatLng(40.344716,-74.658261),
+   new google.maps.LatLng(40.344779,-74.656155),
+   new google.maps.LatLng(40.348716,-74.661314),
+   new google.maps.LatLng(40.341665,-74.660702),
+   new google.maps.LatLng(40.350347,-74.652729),
+   new google.maps.LatLng(40.347222,-74.655887),
+   new google.maps.LatLng(40.346814,-74.655308),
+   new google.maps.LatLng(40.344,-74.657996),
+   new google.maps.LatLng(40.347979,-74.659678),
+   new google.maps.LatLng(40.349529,-74.652725),
+   new google.maps.LatLng(40.344015,-74.656392),
+   new google.maps.LatLng(40.346253,-74.652731),
+   new google.maps.LatLng(40.350198,-74.656595),
+   new google.maps.LatLng(40.344007,-74.650778),
+   new google.maps.LatLng(40.344924,-74.651786),
+   new google.maps.LatLng(40.349402,-74.65754),
+
+   new google.maps.LatLng(40.348673,-74.652458),
+   new google.maps.LatLng(40.34884,-74.652207),
+   new google.maps.LatLng(40.347725,-74.654035),
+   new google.maps.LatLng(40.347069,-74.65402),
+   new google.maps.LatLng(40.348012,-74.652734),
+   new google.maps.LatLng(40.348294,-74.651769),
+   new google.maps.LatLng(40.347103,-74.656707),
+   new google.maps.LatLng(40.343898,-74.647436),
+   new google.maps.LatLng(40.349122,-74.660252),
+   new google.maps.LatLng(40.348855,-74.650101),
+   new google.maps.LatLng(40.348961,-74.649517),
+   new google.maps.LatLng(40.34938,-74.658949),
+   new google.maps.LatLng(40.348656,-74.65058),
+   new google.maps.LatLng(40.348169,-74.652238),
+   new google.maps.LatLng(40.348326,-74.651047),
+   new google.maps.LatLng(40.34544,-74.65529),
+   new google.maps.LatLng(40.347745,-74.655352),
+   new google.maps.LatLng(40.348197,-74.663232),
+   new google.maps.LatLng(40.349647,-74.654714),
+   new google.maps.LatLng(40.348708,-74.659391),
+   new google.maps.LatLng(40.348735,-74.660012),
+   new google.maps.LatLng(40.347704,-74.659195),
+   new google.maps.LatLng(40.347978,-74.657977),
+   new google.maps.LatLng(40.343597,-74.649973),
+   new google.maps.LatLng(40.346549,-74.651659),
+   new google.maps.LatLng(40.346467,-74.657882),
+   new google.maps.LatLng(40.345549,-74.657072),
+   new google.maps.LatLng(40.346685,-74.653631),
+   new google.maps.LatLng(40.346718,-74.656582),
+   new google.maps.LatLng(40.345817,-74.65654),
+   new google.maps.LatLng(40.345208,-74.655773),
+   new google.maps.LatLng(40.344775,-74.656991),
+   new google.maps.LatLng(40.344702,-74.656545),
+   new google.maps.LatLng(40.346747,-74.658675),
+   new google.maps.LatLng(40.348355,-74.660629),
+   new google.maps.LatLng(40.348712,-74.653484),
+   new google.maps.LatLng(40.346307,-74.660997),
+   new google.maps.LatLng(40.345127,-74.656718),
+   new google.maps.LatLng(40.344979,-74.655407),
+   new google.maps.LatLng(40.3455,-74.655806),
+   new google.maps.LatLng(40.345858,-74.656244),
+   new google.maps.LatLng(40.346433,-74.655946),
+   new google.maps.LatLng(40.347662,-74.654524)
+
+];
+
+function initialize() {
+   //set the center to Princeton University
+   var princetonU = new google.maps.LatLng(40.3456455,-74.6558775);
+   //initialize the map window location
+   var mapOptions = {
+          center: princetonU,
+          zoom: 15
+        };
+
+   map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+   var heatmapLoc = new google.maps.MVCArray(networkLocations);
+
+   heatmap = new google.maps.visualization.HeatmapLayer({
+    data: heatmapLoc
+   });
+
+   heatmap.setMap(map);
+   heatmap.set('radius', heatmap.get('radius') ? null : 35);
+   heatmap.set('maxIntensity', 
+      heatmap.get('maxIntensity') ? null : 5551223481);
+}
+
+function toggleHeatmap() {
+  heatmap.setMap(heatmap.getMap() ? null : map);
+}
+
+function changeGradient() {
+  var gradient = [
+    'rgba(0, 255, 255, 0)',
+    'rgba(0, 255, 255, 1)',
+    'rgba(0, 191, 255, 1)',
+    'rgba(0, 127, 255, 1)',
+    'rgba(0, 63, 255, 1)',
+    'rgba(0, 0, 255, 1)',
+    'rgba(0, 0, 223, 1)',
+    'rgba(0, 0, 191, 1)',
+    'rgba(0, 0, 159, 1)',
+    'rgba(0, 0, 127, 1)',
+    'rgba(63, 0, 91, 1)',
+    'rgba(127, 0, 63, 1)',
+    'rgba(191, 0, 31, 1)',
+    'rgba(255, 0, 0, 1)'
+  ]
+  heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+}
+
+function changeOpacity() {
+  heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+
+  <body>
+    <div id="panel">
+      <button onclick="toggleHeatmap()">Toggle Heatmap</button>
+      <button onclick="changeGradient()">Change gradient</button>
+      <button onclick="changeOpacity()">Change opacity</button>
+    </div>
+    <div id="map-canvas"></div>
+  </body>
+</html>
