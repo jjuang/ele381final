@@ -1,6 +1,10 @@
 Goal:
 Our goal for our visualization is to display the upload and download rates per hour at different locations on campus as two heatmaps - one for download rate, and one for upload rate. The intensity of the heatmap will scale according to how much data is transferred. The two heatmaps will be able to change throughout time both automatically and manually to show how network usage changes over time. 
 
+Data Structure:
+(take a few lines from the csv file)
+We have the locations of buildings and their tx (upload) and rx (download) rates per hour, for a whole year starting December 1, 2012 (is this right?)
+
 Implementation:
 We decided to use the Google Maps Javascript API v3, since it includes a heatmap layer already built in to the API. A basic implementation for one hour of upload and download data is attached (map2.html).
 
