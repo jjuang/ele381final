@@ -33,7 +33,7 @@ function initialize() {
     mapOptions);
 
   // Initialize the heatmap
-  heatmap = new google.maps.visualization.HeatmapLayer({
+  heatmapDownload = new google.maps.visualization.HeatmapLayer({
     data: heatmapData,
     map: map,
     radius: 35,
@@ -41,10 +41,15 @@ function initialize() {
     //maxIntensity: 5551223481
   });
 
-  
+  heatmapUpload = new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    //maxIntensity: 100000000,
+    gradient: uploadGradient
+   });
 
-  heatmap.setMap(map);
-  heatmap.setData(heatmapData);
+  heatmapDownload.setMap(map);
+  heatmapUpload.setMap(map);
 
 }
 
@@ -72,13 +77,20 @@ function getNewData(time) {
 // Important: The array of JSON you want is data.things
 var test = function(data){
   //console.log(data.things[0].weight);
-  newData = [];
+  newUploadData = [];
+  newDownloadData = [];
   for(var i = 0; i < data.things.length; i++) {
     var obj = data.things[i];
-    newData.push({location:new google.maps.LatLng(data.things[i].latitude, 
+    if (obj.direction == "rx") {
+      newUploadData.push({location:new google.maps.LatLng(data.things[i].latitude, 
       data.things[i].longitude), weight:parseInt(obj.weight)});
+    } else if (obj.direction == "tx") {
+      newDownloadData.push({location:new google.maps.LatLng(data.things[i].latitude, 
+      data.things[i].longitude), weight:parseInt(obj.weight)});
+    }
   }
-  heatmap.setData(newData);
+  heatmapUpload.setData(newUploadData);
+  heatmapDownload.setData(newDownloadData);
 } 
 
 
@@ -102,6 +114,17 @@ function redraw(counter) {
     timeDiv.textContent = day.add(1, 'hours').format("dddd, MMMM Do YYYY, h:mm a");;
 
   }, 1000);
+}
+
+function toggleHeatmapDownload() {
+  heatmapDownload.setMap(heatmapDownload.getMap() ? null : map);
+}
+function toggleHeatmapUpload() {
+  heatmapUpload.setMap(heatmapUpload.getMap() ? null : map);
+}
+function changeOpacity() {
+  heatmapDownload.set('opacity', heatmapDownload.get('opacity') ? null : 0.2);
+  heatmapUpload.set('opacity', heatmapUpload.get('opacity') ? null : 0.2);
 }
 
 
