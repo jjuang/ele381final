@@ -1,5 +1,21 @@
 var map;
 var heatmap;
+var uploadGradient = [
+    'rgba(0, 255, 255, 0)',
+    'rgba(0, 255, 255, 1)',
+    'rgba(0, 191, 255, 1)',
+    'rgba(0, 127, 255, 1)',
+    'rgba(0, 63, 255, 1)',
+    'rgba(0, 0, 255, 1)',
+    'rgba(0, 0, 223, 1)',
+    'rgba(0, 0, 191, 1)',
+    'rgba(0, 0, 159, 1)',
+    'rgba(0, 0, 127, 1)',
+    'rgba(63, 0, 91, 1)',
+    'rgba(127, 0, 63, 1)',
+    'rgba(191, 0, 31, 1)',
+    'rgba(255, 0, 0, 1)'
+];
 
 var heatmapData = [
   {location: new google.maps.LatLng(40.3456455, -74.6558775), weight: 20531836},
@@ -25,9 +41,22 @@ function initialize() {
     //maxIntensity: 5551223481
   });
 
+  
+
   heatmap.setMap(map);
   heatmap.setData(heatmapData);
+
 }
+
+$(function() {
+  $( "#datepicker" ).datepicker({
+    defaultDate:"01/01/2013",
+    yearRange: "2013:2014",
+    onSelect: function(date) {
+      redraw(10);
+    }
+  });
+});
 
 
 // TODO: read from csv file. time will equal column number
@@ -38,22 +67,11 @@ function getNewData(time) {
   return [new google.maps.LatLng(latitude, longitude)];
 }
 
-// Redraws the heatmap once every 100 milliseconds.
-// This will be used to visualize changes in the heatmap over time.
-// Currently it adds a small constant to the longitude as a test 
-// so we can see it moving.
-function updateHeatmap() {
-  var counter = 0;
-  window.setInterval(function() {
-    heatmap.setData(getNewData(counter));
-    counter = counter + 0.000001;
-  }, 100);
 
-}
 
 // Important: The array of JSON you want is data.things
 var test = function(data){
-  console.log(data.things[0].weight);
+  //console.log(data.things[0].weight);
   newData = [];
   for(var i = 0; i < data.things.length; i++) {
     var obj = data.things[i];
@@ -63,24 +81,32 @@ var test = function(data){
   heatmap.setData(newData);
 } 
 
-function redraw() {
-  var counter = 0;
-  console.log("redraw called");
 
-  
+var day = moment(new Date(2013, 0, 1)); //January 1st 2013
+var prevInterval;
 
-  window.setInterval(function() {
+function redraw(counter) {
+  //console.log(prevInterval);
+  window.clearInterval(prevInterval);
+
+  prevInterval = window.setInterval(function() {
     counter = counter + 1;
+    //console.log(counter);
     $.ajax({
       url: "/getlocations/" + counter,
       success: test,
       contentType: "application/json"
     })
+
+    var timeDiv = document.getElementById("timeText");
+    timeDiv.textContent = day.add(1, 'hours').format("dddd, MMMM Do YYYY, h:mm a");;
+
   }, 1000);
 }
 
+
 google.maps.event.addDomListener(window, 'load', initialize);
-google.maps.event.addDomListener(window, 'ready', redraw());
+google.maps.event.addDomListener(window, 'load', redraw(0));
   
 
   //    $.getJSON("/getlocations/1", test));

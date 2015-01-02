@@ -3,6 +3,17 @@
   <head>
     <style type="text/css">
     html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+
+    #panel {
+        position: absolute;
+        left: 100%;
+        margin-left: -180px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+
     </style>
 
     <script type="text/javascript"
@@ -13,13 +24,34 @@
     src="https://maps.googleapis.com/maps/api/js?libraries=visualization">
     </script>
 
+     <link rel="stylesheet" href="/static/jquery-ui.min.css">
     <script type="text/javascript" src="/static/js/jquery-2.1.1.min.js"> </script>
 
+    <script src="/static/jquery-ui.min.js"></script>
+
+   
+
+    <script type="text/javascript" src="/static/js/moment.min.js"> </script>
+
     <script type="text/javascript" src="/static/js/main.js"> </script>
+
+   
     
   </head>
 
   <body>
+    
+
+    <div id="panel">
+      <button onclick="toggleHeatmapDownload()">Toggle Download Data</button>
+      <button onclick="toggleHeatmapUpload()">Toggle Upload Data</button>
+      <button onclick="changeOpacity()">Change opacity</button>
+      <div id="timeText">Time</div>
+      <input type="text" name="datepicker" id="datepicker">
+    </div>
+
+
     <div id="map-canvas"></div>
+
   </body>
 </html>
