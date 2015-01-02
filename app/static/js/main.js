@@ -1,5 +1,6 @@
 var map;
 var heatmap;
+var day = moment(new Date(2013, 0, 1)); //January 1st 2013
 var uploadGradient = [
     'rgba(0, 255, 255, 0)',
     'rgba(0, 255, 255, 1)',
@@ -58,7 +59,10 @@ $(function() {
     defaultDate:"01/01/2013",
     yearRange: "2013:2014",
     onSelect: function(date) {
-      redraw(10);
+      var selected = moment(date, "MM/DD/YYYY");
+      var counter = selected.diff(day, 'hours');
+      console.log(counter);
+      redraw(counter);
     }
   });
 });
@@ -94,7 +98,7 @@ var test = function(data){
 } 
 
 
-var day = moment(new Date(2013, 0, 1)); //January 1st 2013
+
 var prevInterval;
 
 function redraw(counter) {
@@ -111,9 +115,9 @@ function redraw(counter) {
     })
 
     var timeDiv = document.getElementById("timeText");
-    timeDiv.textContent = day.add(1, 'hours').format("dddd, MMMM Do YYYY, h:mm a");;
+    timeDiv.textContent = moment(new Date(2013, 0, 1)).add(counter, 'hours').format("dddd, MMMM Do YYYY, h:mm a");;
 
-  }, 1000);
+  }, 500);
 }
 
 function toggleHeatmapDownload() {
