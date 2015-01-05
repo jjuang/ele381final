@@ -4,14 +4,26 @@
     <style type="text/css">
     html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 
-    #panel {
+      #accordion {
         position: absolute;
-        left: 100%;
+        left: 90%;
         margin-left: -180px;
         z-index: 5;
-        background-color: #fff;
-        padding: 5px;
+        padding-right: 15px;
         border: 1px solid #999;
+      }
+
+      #toolbar {
+        padding: 4px;
+        display: inline-block;
+      }
+
+      .switch {
+        height: 22px;
+        width: 22px;
+        display: inline-block;
+        position: relative;
+        top: 3px;
       }
 
     </style>
@@ -28,7 +40,7 @@
     <script type="text/javascript" src="/static/js/jquery-2.1.1.min.js"> </script>
 
     <script src="/static/jquery-ui.min.js"></script>
-
+    <script type="text/javascript" src="/static/js/toggle.min.js"> </script>
    
 
     <script type="text/javascript" src="/static/js/moment.min.js"> </script>
@@ -43,11 +55,31 @@
     
 
     <div id="panel">
-      <button onclick="toggleHeatmapDownload()">Toggle Download Data</button>
-      <button onclick="toggleHeatmapUpload()">Toggle Upload Data</button>
-      <button onclick="changeOpacity()">Change opacity</button>
-      <div id="timeText">Time</div>
-      <input type="text" name="datepicker" id="datepicker">
+
+    </div>
+
+    <div id="accordion">
+      <h3>Animation</h3>
+      <div>
+
+        <div class="switch"> <input type="checkbox" value="1" checked> </div>
+        <button onclick="toggleHeatmapDownload()">Toggle Download Data</button>
+        <button onclick="toggleHeatmapUpload()">Toggle Upload Data</button>
+        <button onclick="changeOpacity()">Change opacity</button>
+        <div id="timeText">Time</div>
+        <input type="text" name="datepicker" id="datepicker">
+
+        <div id="toolbar" class="ui-widget-header ui-corner-all">
+           <button id="beginning">go to beginning</button>
+           <button id="rewind">rewind</button>
+           <button id="play">play</button>
+           <button id="forward">fast forward</button>
+           <button id="end">go to end</button>
+        </div>
+
+      </div>
+      <h3>Second header</h3>
+      <div>Second content panel</div>
     </div>
 
 

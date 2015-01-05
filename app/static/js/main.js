@@ -1,6 +1,9 @@
 var map;
 var heatmap;
 var day = moment(new Date(2013, 0, 1)); //January 1st 2013
+
+var currentTime = 0;
+
 var uploadGradient = [
     'rgba(0, 255, 255, 0)',
     'rgba(0, 255, 255, 1)',
@@ -55,6 +58,7 @@ function initialize() {
 }
 
 $(function() {
+
   $( "#datepicker" ).datepicker({
     defaultDate:"01/01/2013",
     yearRange: "2013:2014",
@@ -62,10 +66,106 @@ $(function() {
       var selected = moment(date, "MM/DD/YYYY");
       var counter = selected.diff(day, 'hours');
       console.log(counter);
-      redraw(counter);
+      currentTime = counter;
+      redrawOnce(counter);
     }
   });
+
+  $( "#accordion" ).accordion();
+
+  $('.switch').toggles({on:true});
+
 });
+
+// play, forward, etc button bar
+$(function() {
+
+    $( "#beginning" ).button({
+      text: false,
+      icons: {
+        primary: "ui-icon-seek-start"
+      }
+    })
+    .click(function() {
+        if(currentTime - 24 > 0) {
+          currentTime = currentTime - 24;
+          redrawOnce(currentTime);
+        }
+    });
+
+    $( "#rewind" ).button({
+      text: false,
+      icons: {
+        primary: "ui-icon-seek-prev"
+      }
+    })
+    .click(function() {
+      if(currentTime - 1 > 0) {
+        currentTime = currentTime - 1;
+        redrawOnce(currentTime);
+      }
+    });
+
+    $( "#play" ).button({
+      text: false,
+      icons: {
+        primary: "ui-icon-play"
+      }
+    })
+    .click(function() {
+      var options;
+      if ( $( this ).text() === "play" ) {
+        redraw(currentTime);
+
+        options = {
+          label: "pause",
+          icons: {
+            primary: "ui-icon-pause"
+          }
+        };
+      } else {
+        window.clearInterval(prevInterval);
+
+        options = {
+          label: "play",
+          icons: {
+            primary: "ui-icon-play"
+          }
+        };
+      }
+      $( this ).button( "option", options );
+    });
+
+
+    $( "#forward" ).button({
+      text: false,
+      icons: {
+        primary: "ui-icon-seek-next"
+      }
+    })
+    .click(function() {
+      if (currentTime + 1 < 8760) {
+        currentTime = currentTime + 1;
+        redrawOnce(currentTime);
+      }
+    });
+
+
+    $( "#end" ).button({
+      text: false,
+      icons: {
+        primary: "ui-icon-seek-end"
+      }
+    })
+    .click(function() {
+      if (currentTime + 24 < 8760) {
+        currentTime = currentTime + 24;
+        redrawOnce(currentTime);
+      }
+    });
+
+});
+
 
 
 // TODO: read from csv file. time will equal column number
@@ -107,6 +207,7 @@ function redraw(counter) {
 
   prevInterval = window.setInterval(function() {
     counter = counter + 1;
+    currentTime = counter;
     //console.log(counter);
     $.ajax({
       url: "/getlocations/" + counter,
@@ -117,12 +218,26 @@ function redraw(counter) {
     var timeDiv = document.getElementById("timeText");
     timeDiv.textContent = moment(new Date(2013, 0, 1)).add(counter, 'hours').format("dddd, MMMM Do YYYY, h:mm a");;
 
-  }, 500);
+  }, 1000);
+}
+
+function redrawOnce(counter) {
+  currentTime = counter;
+
+   $.ajax({
+      url: "/getlocations/" + counter,
+      success: test,
+      contentType: "application/json"
+    });
+
+   var timeDiv = document.getElementById("timeText");
+   timeDiv.textContent = moment(new Date(2013, 0, 1)).add(counter, 'hours').format("dddd, MMMM Do YYYY, h:mm a");;
 }
 
 function toggleHeatmapDownload() {
   heatmapDownload.setMap(heatmapDownload.getMap() ? null : map);
 }
+
 function toggleHeatmapUpload() {
   heatmapUpload.setMap(heatmapUpload.getMap() ? null : map);
 }
@@ -133,7 +248,17 @@ function changeOpacity() {
 
 
 google.maps.event.addDomListener(window, 'load', initialize);
-google.maps.event.addDomListener(window, 'load', redraw(0));
+google.maps.event.addDomListener(window, 'load', 
+  $(function() {
+  var timeDiv = document.getElementById("timeText");
+  timeDiv.textContent = moment(new Date(2013, 0, 1)).format("dddd, MMMM Do YYYY, h:mm a");
+
+  $.ajax({
+      url: "/getlocations/" + 0,
+      success: test,
+      contentType: "application/json"
+    })
+  }));
   
 
   //    $.getJSON("/getlocations/1", test));
