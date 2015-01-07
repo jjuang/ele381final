@@ -73,7 +73,12 @@ $(function() {
 
   $( "#accordion" ).accordion();
 
-  $('.switch').toggles({on:true});
+  //$("input#great").switchButton();
+
+  $('input').iCheck({
+    checkboxClass: 'icheckbox_flat-green',
+    radioClass: 'iradio_flat-green'
+  });
 
 });
 

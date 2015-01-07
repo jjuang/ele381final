@@ -28,6 +28,7 @@
 
     </style>
 
+
     <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmUz5sQxG_Fh39gX_ZWEr6oFLewa4wecc">
     </script>
@@ -36,14 +37,18 @@
     src="https://maps.googleapis.com/maps/api/js?libraries=visualization">
     </script>
 
-     <link rel="stylesheet" href="/static/jquery-ui.min.css">
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css">
     <script type="text/javascript" src="/static/js/jquery-2.1.1.min.js"> </script>
 
-    <script src="/static/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/static/js/toggle.min.js"> </script>
-   
+    <script src="/static/js/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="/static/js/toggle.js"> </script>
 
     <script type="text/javascript" src="/static/js/moment.min.js"> </script>
+
+    <link href="/static/css/flat/green.css" rel="stylesheet">
+    <script src="/static/js/icheck.js"></script>
+
 
     <script type="text/javascript" src="/static/js/main.js"> </script>
 
@@ -62,7 +67,13 @@
       <h3>Animation</h3>
       <div>
 
-        <div class="switch"> <input type="checkbox" value="1" checked> </div>
+       <input type="checkbox">
+       <input type="checkbox" checked>
+       
+       <input type="radio" name="iCheck" checked>
+       Color by:
+       <input type="radio" name="iCheck">
+
         <button onclick="toggleHeatmapDownload()">Toggle Download Data</button>
         <button onclick="toggleHeatmapUpload()">Toggle Upload Data</button>
         <button onclick="changeOpacity()">Change opacity</button>
