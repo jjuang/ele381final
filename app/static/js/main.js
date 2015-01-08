@@ -4,6 +4,11 @@ var day = moment(new Date(2013, 0, 1)); //January 1st 2013
 
 var currentTime = 0;
 
+var color1 = ['rgba(26,152,80,0)','rgb(26,152,80)','rgb(102,189,99)','rgb(166,217,106)','rgb(217,239,139)','rgb(255,255,191)','rgb(254,224,139)','rgb(253,174,97)','rgb(244,109,67)','rgb(215,48,39)'];
+var color2 = ['rgba(215,48,39,0)','rgb(215,48,39)','rgb(244,109,67)','rgb(253,174,97)','rgb(254,224,144)','rgb(255,255,191)','rgb(224,243,248)','rgb(171,217,233)','rgb(116,173,209)','rgb(69,117,180)'];
+var color3 = ['rgba(140,81,10,0)','rgb(140,81,10)','rgb(191,129,45)','rgb(223,194,125)','rgb(246,232,195)','rgb(255,255,191)','rgb(199,234,229)','rgb(128,205,193)','rgb(53,151,143)','rgb(1,102,94)'];
+var color4 = ['rgba(27,120,55,0)','rgb(27,120,55)','rgb(90,174,97)','rgb(166,219,160)','rgb(217,240,211)','rgb(247,247,247)','rgb(231,212,232)','rgb(194,165,207)','rgb(153,112,171)','rgb(118,42,131)'];
+
 var uploadGradient = [
     'rgba(0, 255, 255, 0)',
     'rgba(0, 255, 255, 1)',
@@ -36,25 +41,59 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('map-canvas'),
     mapOptions);
 
+  heatmapAll = new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    map: map,
+    radius: 35,
+    maxIntensity: 100000000,
+    //maxIntensity: 5551223481
+  });
+
+
   // Initialize the heatmap
   heatmapDownload = new google.maps.visualization.HeatmapLayer({
     data: heatmapData,
     map: map,
     radius: 35,
-    maxIntensity: 100000000
-    //maxIntensity: 5551223481
+    maxIntensity: 100000000,
+    gradient:color1
   });
 
   heatmapUpload = new google.maps.visualization.HeatmapLayer({
+    map:map,
     data: heatmapData,
     radius: 35,
-    //maxIntensity: 100000000,
-    gradient: uploadGradient
    });
+  
+  heatmapAcademic = new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    maxIntensity: 100000000,
+    gradient:color1
+  });
 
-  heatmapDownload.setMap(map);
-  heatmapUpload.setMap(map);
+  heatmapResidential = new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    maxIntensity: 100000000,
+    gradient:color2
+  });
 
+  heatmapLibrary = new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    maxIntensity: 100000000,
+    gradient:color3
+  });
+
+  heatmapEating = new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    maxIntensity: 100000000,
+    gradient:uploadGradient
+  });
+
+  heatmapAll.setMap(map);
 }
 
 $(function() {
@@ -71,7 +110,9 @@ $(function() {
     }
   });
 
-  $( "#accordion" ).accordion();
+  $( "#accordion" ).accordion({
+    collapsible: true
+  });
 
   //$("input#great").switchButton();
 
@@ -80,7 +121,91 @@ $(function() {
     radioClass: 'iradio_flat-green'
   });
 
+  $('#radio_all').on('ifChecked', function(event){
+    heatmapUpload.setMap(null);
+    heatmapDownload.setMap(null);
+
+    heatmapAcademic.setMap(null);
+    heatmapResidential.setMap(null);
+    heatmapLibrary.setMap(null);
+    heatmapEating.setMap(null);
+
+    $('#academic').iCheck('disable');
+    $('#residential').iCheck('disable');
+    $('#library').iCheck('disable');
+    $('#eating').iCheck('disable');
+
+    heatmapAll.setMap(map);
+
+  });
+
+  $('#radio_transfer').on('ifChecked', function(event){
+    heatmapAll.setMap(null);
+
+    heatmapAcademic.setMap(null);
+    heatmapResidential.setMap(null);
+    heatmapLibrary.setMap(null);
+    heatmapEating.setMap(null);
+
+    $('#academic').iCheck('disable');
+    $('#residential').iCheck('disable');
+    $('#library').iCheck('disable');
+    $('#eating').iCheck('disable');
+
+    heatmapUpload.set("gradient", uploadGradient);
+    heatmapDownload.setMap(map);
+    heatmapUpload.setMap(map);
+  });
+
+  $('#radio_building').on('ifChecked', function(event){
+    heatmapAll.setMap(null);
+    heatmapUpload.setMap(null);
+    heatmapDownload.setMap(null);
+
+    $('#academic').iCheck('enable');
+    $('#residential').iCheck('enable');
+    $('#library').iCheck('enable');
+    $('#eating').iCheck('enable');
+
+    heatmapAcademic.setMap(map);
+    heatmapResidential.setMap(map);
+    heatmapLibrary.setMap(map);
+    heatmapEating.setMap(map);
+  });
+
+  $('#academic').on('ifChecked', function(event){
+    heatmapAcademic.setMap(map);
+  });
+  $('#academic').on('ifUnchecked', function(event){
+    heatmapAcademic.setMap(null);
+  });
+
+  $('#residential').on('ifChecked', function(event){
+    heatmapResidential.setMap(map);
+  });
+  $('#residential').on('ifUnchecked', function(event){
+    heatmapResidential.setMap(null);
+  });
+
+  $('#library').on('ifChecked', function(event){
+    heatmapLibrary.setMap(map);
+  });
+  $('#library').on('ifUnchecked', function(event){
+    heatmapLibrary.setMap(null);
+  });
+
+  $('#eating').on('ifChecked', function(event){
+    heatmapEating.setMap(map);
+  });
+  $('#eating').on('ifUnchecked', function(event){
+    heatmapEating.setMap(null);
+  });
+
+   
+
 });
+
+
 
 // play, forward, etc button bar
 $(function() {
@@ -169,27 +294,28 @@ $(function() {
       }
     });
 
-});
-
-
-
-// TODO: read from csv file. time will equal column number
-// the values will be weights
-function getNewData(time) {
-  var latitude = 40.3456455 + time;
-  var longitude = -74.6558775;
-  return [new google.maps.LatLng(latitude, longitude)];
-}
+}); 
 
 
 
 // Important: The array of JSON you want is data.things
 var test = function(data){
   //console.log(data.things[0].weight);
+  newAllData = [];
+
   newUploadData = [];
   newDownloadData = [];
+
+  newAcaData = [];
+  newResData = [];
+  newLibData = [];
+  newEatData = [];
+
   for(var i = 0; i < data.things.length; i++) {
     var obj = data.things[i];
+    newAllData.push({location:new google.maps.LatLng(data.things[i].latitude, 
+      data.things[i].longitude), weight:parseInt(obj.weight)});
+
     if (obj.direction == "rx") {
       newUploadData.push({location:new google.maps.LatLng(data.things[i].latitude, 
       data.things[i].longitude), weight:parseInt(obj.weight)});
@@ -197,9 +323,33 @@ var test = function(data){
       newDownloadData.push({location:new google.maps.LatLng(data.things[i].latitude, 
       data.things[i].longitude), weight:parseInt(obj.weight)});
     }
+
+    if (obj.buildingType == "Academic") {
+      newAcaData.push({location:new google.maps.LatLng(data.things[i].latitude, 
+      data.things[i].longitude), weight:parseInt(obj.weight)});
+    } else if (obj.buildingType == "Residential") {
+      newResData.push({location:new google.maps.LatLng(data.things[i].latitude, 
+      data.things[i].longitude), weight:parseInt(obj.weight)});
+    } else if (obj.buildingType == "Library") {
+      newLibData.push({location:new google.maps.LatLng(data.things[i].latitude, 
+      data.things[i].longitude), weight:parseInt(obj.weight)});
+    } else if (obj.buildingType == "Eating") {
+      newEatData.push({location:new google.maps.LatLng(data.things[i].latitude, 
+      data.things[i].longitude), weight:parseInt(obj.weight)});
+    }
   }
+
+
+
+  heatmapAll.setData(newAllData);
+
   heatmapUpload.setData(newUploadData);
   heatmapDownload.setData(newDownloadData);
+
+  heatmapAcademic.setData(newAcaData);
+  heatmapResidential.setData(newResData);
+  heatmapLibrary.setData(newLibData);
+  heatmapEating.setData(newEatData);
 } 
 
 

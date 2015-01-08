@@ -17,11 +17,12 @@ class LongLat:
 		return (self.lon, self.lat) == (other.lon, other.lat)
 
 class DataObject:
-	def __init__(self, name, longitude, latitude, direction, usage):
+	def __init__(self, name, longitude, latitude, direction, buildingType, usage):
 		self.name = name
 		self.longitude = longitude
 		self.latitude = latitude
 		self.direction = direction
+		self.buildingType = buildingType
 		self.usage = usage
 
 	def serialize(self, time):
@@ -30,6 +31,7 @@ class DataObject:
         	'longitude': self.longitude,
         	'latitude': self.latitude,
         	'direction': self.direction,
+        	'buildingType': self.buildingType,
         	'weight': self.usage[time]
         }
 
@@ -48,6 +50,7 @@ def parseCSV():
 			longitude = 0
 			latitude = 0
 			x = ""
+			buildingType = ""
 			usage = []
 
 			for word in row:
@@ -69,6 +72,9 @@ def parseCSV():
 				elif counter == 4:
 				 x = word
 				 counter +=1;
+				elif counter == 5:
+				 buildingType = word
+				 counter +=1;
 				else:
 					if word.isdigit():
 						usage.append(word)
@@ -77,7 +83,7 @@ def parseCSV():
 					arraycounter += 1
 
 			location = LongLat(longitude, latitude)
-			newObject = DataObject(name, longitude, latitude, x, usage)
+			newObject = DataObject(name, longitude, latitude, x, buildingType, usage)
 
 			data.append(newObject)
 			locLookup[location]= newObject
