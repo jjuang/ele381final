@@ -3,6 +3,7 @@ var heatmap;
 var day = moment(new Date(2013, 0, 1)); //January 1st 2013
 
 var currentTime = 0;
+var newSpeed = 1000; //currentSpeed
 
 var color0 = ['rgba(50,136,189,0)','rgb(50,136,189)','rgb(102,194,165)','rgb(171,221,164)','rgb(230,245,152)','rgb(255,255,191)','rgb(254,224,139)','rgb(253,174,97)','rgb(244,109,67)','rgb(213,62,79)'];
 var color1 = ['rgba(26,152,80,0)','rgb(26,152,80)','rgb(102,189,99)','rgb(166,217,106)','rgb(217,239,139)','rgb(255,255,191)','rgb(254,224,139)','rgb(253,174,97)','rgb(244,109,67)','rgb(215,48,39)'];
@@ -786,7 +787,19 @@ function clearAll() {
   heatmapAvgYearT.setMap(null);
 }
 
+
+
 $(function() {
+
+  $( "#slider" ).slider({
+    max:1000,
+    min:100
+  });
+
+  $( "#slider" ).on( "slidechange", function( event, ui ) {
+    newSpeed = 1100 - $( "#slider" ).slider( "value" );
+    redraw(currentTime, newSpeed);
+  } );
 
   $( "#datepicker" ).datepicker({
     defaultDate:"01/01/2013",
@@ -952,7 +965,7 @@ $(function() {
     .click(function() {
       var options;
       if ( $( this ).text() === "play" ) {
-        redraw(currentTime);
+        redraw(currentTime, newSpeed);
 
         options = {
           label: "pause",
@@ -1063,7 +1076,7 @@ var test = function(data){
 
 var prevInterval;
 
-function redraw(counter) {
+function redraw(counter, speed) {
   //console.log(prevInterval);
   window.clearInterval(prevInterval);
 
@@ -1080,7 +1093,7 @@ function redraw(counter) {
     var timeDiv = document.getElementById("timeText");
     timeDiv.textContent = moment(new Date(2013, 0, 1)).add(counter, 'hours').format("dddd, MMMM Do YYYY, h:mm a");;
 
-  }, 1000);
+  }, speed);
 }
 
 function redrawOnce(counter) {
