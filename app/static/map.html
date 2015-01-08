@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+    html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+
+      #accordion {
+        position: absolute;
+        left: 90%;
+        margin-left: -180px;
+        z-index: 5;
+        padding-right: 15px;
+        border: 1px solid #999;
+        width:300px;
+      }
+
+      #toolbar {
+        padding: 4px;
+        display: inline-block;
+      }
+
+      .switch {
+        height: 22px;
+        width: 22px;
+        display: inline-block;
+        position: relative;
+        top: 3px;
+      }
+
+    </style>
+
+
+    <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmUz5sQxG_Fh39gX_ZWEr6oFLewa4wecc">
+    </script>
+
+    <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?libraries=visualization">
+    </script>
+
+    <link rel="stylesheet" href="/static/jquery-ui.min.css">
+    <link rel="stylesheet" href="/static/jquery-ui.structure.css">
+    <script type="text/javascript" src="/static/js/jquery-2.1.1.min.js"> </script>
+
+    <script src="/static/js/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="/static/js/toggle.js"> </script>
+
+    <script type="text/javascript" src="/static/js/moment.min.js"> </script>
+
+    <link href="/static/css/flat/green.css" rel="stylesheet">
+    <script src="/static/js/icheck.js"></script>
+
+
+    <script type="text/javascript" src="/static/js/main.js"> </script>
+
+   
+    
+  </head>
+
+  <body>
+    
+
+    <div id="panel">
+
+    </div>
+
+    <div id="accordion">
+      <h3>Animation</h3>
+
+      <div>
+        <div id="timeText">Time</div>
+
+        <div id="toolbar" class="ui-widget-header ui-corner-all">
+           <button id="beginning">go to beginning</button>
+           <button id="rewind">rewind</button>
+           <button id="play">play</button>
+           <button id="forward">fast forward</button>
+           <button id="end">go to end</button>
+        </div>
+
+        <input type="text" name="datepicker" id="datepicker" placeholder="Jump to another date">
+       <br></br>
+       Color by:
+       <br></br>
+
+       <label><input type="radio" name="iCheck" id="radio_all" checked> All Data </label>
+       <br></br>
+       
+       <label><input type="radio" name="iCheck" id="radio_transfer"> Transfer Type </label>
+
+        <button onclick="toggleHeatmapDownload()">Toggle Download Data</button>
+        <button onclick="toggleHeatmapUpload()">Toggle Upload Data</button>
+        <button onclick="changeOpacity()">Change opacity</button>
+
+        <br></br>
+        <label><input type="radio" name="iCheck" id="radio_building"> Building Type </label> 
+        <br></br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" checked disabled id="academic">Academic</label>
+        <br></br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" checked disabled id="residential">Residential</label>
+        <br></br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" checked disabled id="library">Library</label>
+        <br></br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" checked disabled id="eating">Eating Clubs</label>
+        <br></br>
+      </div>
+      <h3>Compare Averages</h3>
+      <div>
+        <button onclick="toggleHeatmapAvgFallBreakR()">Fall Break R</button>
+        <button onclick="toggleHeatmapAvgFallFinalR()">Fall Finals R</button>
+        <button onclick="toggleHeatmapAvgFallMidR()">Fall Midterms R</button>
+        <button onclick="toggleHeatmapAvgSun7Dec2013R()">12-07-2013 R</button>
+        <button onclick="toggleheatmapAvgWed4Dec2013R()">12-04-2013 R</button>
+        <button onclick="toggleheatmapAvgYearR()">Avg Download 2013</button>
+        <button onclick="toggleheatmapAvgYearT()">Avg Upload 2013</button>
+        <button onclick="clearAll()">CLEAR</button>
+      </div>
+    </div>
+
+
+    <div id="map-canvas"></div>
+
+  </body>
+</html>
