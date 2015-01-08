@@ -1,2 +1,4 @@
-~$Data.xlsx
-~$Geographical Coordinates of Buildings.xlsx
+venv
+*.pyc
+staticfiles
+.env
