@@ -660,7 +660,7 @@ function initialize() {
     data: heatmapData,
     map: map,
     radius: 35,
-    maxIntensity: 100000000,
+    maxIntensity: 90620657
     //maxIntensity: 5551223481
   });
 
@@ -670,41 +670,40 @@ function initialize() {
     data: heatmapData,
     map: map,
     radius: 35,
-    maxIntensity: 100000000,
-    gradient:color1
+    maxIntensity: 90620657    
   });
 
   heatmapUpload = new google.maps.visualization.HeatmapLayer({
     map:map,
     data: heatmapData,
-    radius: 35,
+    radius: 35
    });
   
   heatmapAcademic = new google.maps.visualization.HeatmapLayer({
     data: heatmapData,
     radius: 35,
-    maxIntensity: 100000000,
+    maxIntensity: 90620657,
     gradient:color1
   });
 
   heatmapResidential = new google.maps.visualization.HeatmapLayer({
     data: heatmapData,
     radius: 35,
-    maxIntensity: 100000000,
+    maxIntensity: 90620657,
     gradient:color2
   });
 
   heatmapLibrary = new google.maps.visualization.HeatmapLayer({
     data: heatmapData,
     radius: 35,
-    maxIntensity: 100000000,
+    maxIntensity: 90620657,
     gradient:color3
   });
 
   heatmapEating = new google.maps.visualization.HeatmapLayer({
     data: heatmapData,
     radius: 35,
-    maxIntensity: 100000000,
+    maxIntensity: 90620657,
     gradient:uploadGradient
   });
 
@@ -723,37 +722,44 @@ function angelaInitialize() {
     heatmapAvgFallBreakR = new google.maps.visualization.HeatmapLayer({
     data: hpAvgFallBreakRData,
     radius: 35,
-    gradient: color0
+    gradient: color0,
+    maxIntensity: 90620657
    });
     heatmapAvgFallFinalR = new google.maps.visualization.HeatmapLayer({
     data: hpAvgFallFinalRData,
     radius: 35,
-    gradient: color1
+    gradient: color1,
+    maxIntensity: 90620657
    });
     heatmapAvgFallMidR = new google.maps.visualization.HeatmapLayer({
     data: hpAvgFallMidRData,
     radius: 35,
-    gradient: color2
+    gradient: color2,
+    maxIntensity: 90620657
    });
     heatmapAvgSun7Dec2013R = new google.maps.visualization.HeatmapLayer({
     data: hpAvgSun7Dec2013RData,
     radius: 35,
-    gradient: color3
+    gradient: color3,
+    maxIntensity: 90620657
    });
     heatmapAvgWed4Dec2013R = new google.maps.visualization.HeatmapLayer({
     data: hpAvgWed4Dec2013RData,
     radius: 35,
-    gradient: uploadGradient
+    gradient: color4,
+    maxIntensity: 90620657
    });
     //this one uses default colors
     heatmapAvgYearR = new google.maps.visualization.HeatmapLayer({
     data: hpAvgYearRData,
     radius: 35,
+    maxIntensity: 90620657
    });
     heatmapAvgYearT = new google.maps.visualization.HeatmapLayer({
     data: hpAvgYearTData,
     radius: 35,
-    gradient: color4
+    gradient: uploadGradient,
+    maxIntensity: 90620657
    });
   }
 function toggleHeatmapAvgFallBreakR() {
@@ -776,15 +782,6 @@ function toggleheatmapAvgYearR() {
 }
 function toggleheatmapAvgYearT() {
   heatmapAvgYearT.setMap(heatmapAvgYearT.getMap() ? null : map);
-}
-function clearAll() {
-  heatmapAvgFallBreakR.setMap(null);
-  heatmapAvgFallFinalR.setMap(null);
-  heatmapAvgFallMidR.setMap(null);
-  heatmapAvgSun7Dec2013R.setMap(null);
-  heatmapAvgWed4Dec2013R.setMap(null);
-  heatmapAvgYearR.setMap(null);
-  heatmapAvgYearT.setMap(null);
 }
 
 
@@ -837,8 +834,8 @@ $(function() {
   //$("input#great").switchButton();
 
   $('input').iCheck({
-    checkboxClass: 'icheckbox_flat-green',
-    radioClass: 'iradio_flat-green'
+    checkboxClass: 'icheckbox_flat-grey',
+    radioClass: 'iradio_flat-grey'
   });
 
   $('#radio_all').on('ifChecked', function(event){
@@ -1091,7 +1088,7 @@ function redraw(counter, speed) {
     })
 
     var timeDiv = document.getElementById("timeText");
-    timeDiv.textContent = moment(new Date(2013, 0, 1)).add(counter, 'hours').format("dddd, MMMM Do YYYY, h:mm a");;
+    timeDiv.textContent = moment(new Date(2013, 0, 1)).add(counter, 'hours').format("dddd, MMM Do YYYY, h:mm a");;
 
   }, speed);
 }
@@ -1106,7 +1103,7 @@ function redrawOnce(counter) {
     });
 
    var timeDiv = document.getElementById("timeText");
-   timeDiv.textContent = moment(new Date(2013, 0, 1)).add(counter, 'hours').format("dddd, MMMM Do YYYY, h:mm a");;
+   timeDiv.textContent = moment(new Date(2013, 0, 1)).add(counter, 'hours').format("dddd, MMM Do YYYY, h:mm a");;
 }
 
 function toggleHeatmapDownload() {
@@ -1117,8 +1114,33 @@ function toggleHeatmapUpload() {
   heatmapUpload.setMap(heatmapUpload.getMap() ? null : map);
 }
 function changeOpacity() {
-  heatmapDownload.set('opacity', heatmapDownload.get('opacity') ? null : 0.2);
-  heatmapUpload.set('opacity', heatmapUpload.get('opacity') ? null : 0.2);
+  heatmapDownload.set('opacity', heatmapDownload.get('opacity') ? null : 0.5);
+  heatmapUpload.set('opacity', heatmapUpload.get('opacity') ? null : 0.5);
+}
+
+function clearAll() {
+  heatmapAvgFallBreakR.setMap(null);
+  heatmapAvgFallFinalR.setMap(null);
+  heatmapAvgFallMidR.setMap(null);
+  heatmapAvgSun7Dec2013R.setMap(null);
+  heatmapAvgWed4Dec2013R.setMap(null);
+  heatmapAvgYearR.setMap(null);
+  heatmapAvgYearT.setMap(null);
+
+  heatmapDownload.setMap(null);
+  heatmapUpload.setMap(null);
+
+  heatmapAcademic.setMap(null);
+  heatmapResidential.setMap(null);
+  heatmapLibrary.setMap(null);
+  heatmapEating.setMap(null);
+
+  heatmapAll.setMap(null);
+
+  $('#academic').iCheck('disable');
+  $('#residential').iCheck('disable');
+  $('#library').iCheck('disable');
+  $('#eating').iCheck('disable');
 }
 
 
@@ -1126,7 +1148,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 google.maps.event.addDomListener(window, 'load', 
   $(function() {
   var timeDiv = document.getElementById("timeText");
-  timeDiv.textContent = moment(new Date(2013, 0, 1)).format("dddd, MMMM Do YYYY, h:mm a");
+  timeDiv.textContent = moment(new Date(2013, 0, 1)).format("dddd, MMM Do YYYY, h:mm a");
 
   $.ajax({
       url: "/getlocations/" + 0,

@@ -3,6 +3,9 @@
   <head>
     <style type="text/css">
     html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    body{
+      font-size:0.85em;
+    }
 
       #timeText {
         margin-left: -15px;
@@ -15,13 +18,15 @@
         margin-left: -180px;
         z-index: 5;
         padding-right: 15px;
-        border: 1px solid #999;
+        border: none;
         width:300px;
       }
 
       #toolbar {
         padding: 4px;
-        display: inline-block;
+        display:inline-block;
+        margin-bottom: 5px;
+        border:none;
       }
 
       .switch {
@@ -30,6 +35,32 @@
         display: inline-block;
         position: relative;
         top: 3px;
+      }
+      #datepicker{
+        font-size:0.8em;
+        width:130px;
+        display:inline-block;
+        margin-bottom: 15px;
+      }
+      #timeText{
+        margin-bottom:10px;
+        font-size:0.9em;
+        padding:10px;
+        background:black;
+        color:white;
+      }
+      #averages button{
+        margin-bottom:10px;
+      }
+      #datatype{
+        font-size:1em;
+        font-weight:bold;
+      }
+      label{
+        font-size:0.9em;
+      }
+      button{
+        margin:5px 0;
       }
 
     </style>
@@ -53,7 +84,7 @@
 
     <script type="text/javascript" src="/static/js/moment.min.js"> </script>
 
-    <link href="/static/css/flat/green.css" rel="stylesheet">
+    <link href="/static/css/flat/grey.css" rel="stylesheet">
     <script src="/static/js/icheck.js"></script>
 
 
@@ -88,42 +119,46 @@
         <label><div id="slider"></div> Playback Speed </label>
         <br></br>
 
-        <input type="text" name="datepicker" id="datepicker" placeholder="Jump to another date">
+        <input type="text" name="datepicker" id="datepicker" placeholder="Jump to MM/DD/YYYY">
        <br></br>
-       Color by:
-       <br></br>
-
-       <label><input type="radio" name="iCheck" id="radio_all" checked> All Data </label>
+       <span id="datatype">Choose data type:</span> 
+       <br><br>
+       <label><input type="radio" name="iCheck" id="radio_all" checked> All Data </label> <button onclick="clearAll()" style="float:right;margin-top:-3px">CLEAR ALL</button>
        <br></br>
        
        <label><input type="radio" name="iCheck" id="radio_transfer"> Transfer Type </label>
-
         <button onclick="toggleHeatmapDownload()">Toggle Download Data</button>
         <button onclick="toggleHeatmapUpload()">Toggle Upload Data</button>
+        
         <button onclick="changeOpacity()">Change opacity</button>
 
         <br></br>
         <label><input type="radio" name="iCheck" id="radio_building"> Building Type </label> 
         <br></br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" checked disabled id="academic">Academic</label>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" checked disabled id="academic"> Academic</label>
         <br></br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" checked disabled id="residential">Residential</label>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" checked disabled id="residential"> Residential</label>
         <br></br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" checked disabled id="library">Library</label>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" checked disabled id="library"> Library</label>
         <br></br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" checked disabled id="eating">Eating Clubs</label>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" checked disabled id="eating"> Eating Clubs</label>
         <br></br>
       </div>
       <h3>Compare Averages</h3>
-      <div>
-        <button onclick="toggleHeatmapAvgFallBreakR()">Fall Break R</button>
-        <button onclick="toggleHeatmapAvgFallFinalR()">Fall Finals R</button>
-        <button onclick="toggleHeatmapAvgFallMidR()">Fall Midterms R</button>
-        <button onclick="toggleHeatmapAvgSun7Dec2013R()">12-07-2013 R</button>
-        <button onclick="toggleheatmapAvgWed4Dec2013R()">12-04-2013 R</button>
-        <button onclick="toggleheatmapAvgYearR()">Avg Download 2013</button>
-        <button onclick="toggleheatmapAvgYearT()">Avg Upload 2013</button>
-        <button onclick="clearAll()">CLEAR</button>
+      <div id = "averages">
+        <button onclick="clearAll()">CLEAR ALL</button>
+        <br><br> 
+        <span style="font-weight:bold;">Fall Download Data:</span><br>
+        <button onclick="toggleHeatmapAvgFallMidR()">Midterms</button>
+        <button onclick="toggleHeatmapAvgFallBreakR()">Fall Break</button>
+        <button onclick="toggleHeatmapAvgFallFinalR()">Finals</button>
+        <br>
+        <button onclick="toggleheatmapAvgWed4Dec2013R()">12/04/2013</button>
+        <button onclick="toggleHeatmapAvgSun7Dec2013R()">12/07/2013</button>
+        <br>
+        <span style="font-weight:bold;">Entire Year:</span><br>
+        <button onclick="toggleheatmapAvgYearR()">Avg Download</button>
+        <button onclick="toggleheatmapAvgYearT()">Avg Upload</button>
       </div>
     </div>
 

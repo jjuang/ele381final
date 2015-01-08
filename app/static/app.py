@@ -320,7 +320,7 @@ button.ui-button::-moz-focus-inner {
 	padding: 0;
 }
 .ui-datepicker {
-	width: 15em;
+	width: 17em;
 	padding: .2em .2em 0;
 	display: none;
 }
