@@ -682,29 +682,29 @@ function initialize() {
   heatmapAcademic = new google.maps.visualization.HeatmapLayer({
     data: heatmapData,
     radius: 35,
-    maxIntensity: 90620657
-    //gradient:color1
+    maxIntensity: 90620657,
+    gradient:color1
   });
 
   heatmapResidential = new google.maps.visualization.HeatmapLayer({
     data: heatmapData,
     radius: 35,
-    maxIntensity: 90620657
-    //gradient:color2
+    maxIntensity: 90620657,
+    gradient:color2
   });
 
   heatmapLibrary = new google.maps.visualization.HeatmapLayer({
     data: heatmapData,
     radius: 35,
-    maxIntensity: 90620657
-    //gradient:color3
+    maxIntensity: 90620657,
+    gradient:color3
   });
 
   heatmapEating = new google.maps.visualization.HeatmapLayer({
     data: heatmapData,
     radius: 35,
-    maxIntensity: 90620657
-    //gradient:uploadGradient
+    maxIntensity: 90620657,
+    gradient:uploadGradient
   });
 
   angelaInitialize();
