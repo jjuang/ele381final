@@ -676,6 +676,7 @@ function initialize() {
   heatmapUpload = new google.maps.visualization.HeatmapLayer({
     map:map,
     data: heatmapData,
+    maxIntensity: 90620657,
     radius: 35
    });
   
