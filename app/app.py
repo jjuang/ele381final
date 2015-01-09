@@ -129,9 +129,9 @@ def getlocations(time):
 	return jsonify(things = [x.serialize(time) for x in data])
 	#return jsonify(data[0].serialize(1))
 
-@app.route("/angela1")
+@app.route("/angela1", methods=["GET"])
 def angela1():
-	return jsonify(things = [y.serialize() for y in data_avg_fall_read])
+	return jsonify(things = [y.serialize(0) for y in data_avg_fall_read])
 
 @app.route("/lookup", methods=["GET"])
 def lookup():
