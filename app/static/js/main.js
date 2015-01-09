@@ -99,21 +99,53 @@ function initialize() {
   heatmapAll.setMap(map);
 }
 
-//angela's data part 2
-var average_fall_read = function(data_avg_fall_read){
-  console.log(data_avg_fall_read.things[0].weight);
-  newAvgFallReadData = [];
+//***********************angela's data part 2***********************************
+var average_fall_final = function(data_avg_fall_final){
+  console.log(data_avg_fall_final.things[0].weight);
+  newAvgFallFinalData = [];
 
-  for(var i = 0; i < data_avg_fall_read.things.length; i++) {
-    var obj = data_avg_fall_read.things[i];
+  for(var i = 0; i < data_avg_fall_final.things.length; i++) {
+    var obj = data_avg_fall_final.things[i];
 
     if (obj.direction == "rx") {
-      newAvgFallReadData.push({location:new google.maps.LatLng(data_avg_fall_read.things[i].latitude, 
-      data_avg_fall_read.things[i].longitude), weight:parseInt(obj.weight)});
+      newAvgFallFinalData.push({location:new google.maps.LatLng(data_avg_fall_final.things[i].latitude, 
+      data_avg_fall_final.things[i].longitude), weight:parseInt(obj.weight)});
     }
   }
-  heatmapAvgFallReadRX.setData(newAvgFallReadData);
-} 
+  heatmapAvgFallFinalRX.setData(newAvgFallFinalData);
+}
+var average_fall_break = function(data_avg_fall_break){
+  console.log(data_avg_fall_break.things[0].weight);
+  newAvgFallBreakData = [];
+
+  for(var i = 0; i < data_avg_fall_break.things.length; i++) {
+    var obj = data_avg_fall_break.things[i];
+
+    if (obj.direction == "rx") {
+      newAvgFallBreakData.push({location:new google.maps.LatLng(data_avg_fall_break.things[i].latitude, 
+      data_avg_fall_break.things[i].longitude), weight:parseInt(obj.weight)});
+    }
+  }
+  heatmapAvgFallBreakRX.setData(newAvgFallBreakData);
+}
+
+var average_fall_mid = function(data_avg_fall_mid){
+  console.log(data_avg_fall_mid.things[0].weight);
+  newAvgFallMidData = [];
+
+  for(var i = 0; i < data_avg_fall_mid.things.length; i++) {
+    var obj = data_avg_fall_mid.things[i];
+
+    if (obj.direction == "rx") {
+      newAvgFallMidData.push({location:new google.maps.LatLng(data_avg_fall_mid.things[i].latitude, 
+      data_avg_fall_mid.things[i].longitude), weight:parseInt(obj.weight)});
+    }
+  }
+  heatmapAvgFallMidRX.setData(newAvgFallMidData);
+}
+
+//******************** Spring semester *****************************
+
 var average_spring_break = function(data_avg_spring_break){
   console.log(data_avg_spring_break.things[0].weight);
   newAvgSpringBreakData = [];
@@ -127,39 +159,293 @@ var average_spring_break = function(data_avg_spring_break){
     }
   }
   heatmapAvgSpringBreakRX.setData(newAvgSpringBreakData);
-} 
+}
+var average_spring_mid = function(data_avg_spring_mid){
+  console.log(data_avg_spring_mid.things[0].weight);
+  newAvgSpringMidData = [];
+
+  for(var i = 0; i < data_avg_spring_mid.things.length; i++) {
+    var obj = data_avg_spring_mid.things[i];
+
+    if (obj.direction == "rx") {
+      newAvgSpringMidData.push({location:new google.maps.LatLng(data_avg_spring_mid.things[i].latitude, 
+      data_avg_spring_mid.things[i].longitude), weight:parseInt(obj.weight)});
+    }
+  }
+  heatmapAvgSpringMidRX.setData(newAvgSpringMidData);
+}
+var average_spring_final = function(data_avg_spring_final){
+  console.log(data_avg_spring_final.things[0].weight);
+  newAvgSpringFinalData = [];
+
+  for(var i = 0; i < data_avg_spring_final.things.length; i++) {
+    var obj = data_avg_spring_final.things[i];
+
+    if (obj.direction == "rx") {
+      newAvgSpringFinalData.push({location:new google.maps.LatLng(data_avg_spring_final.things[i].latitude, 
+      data_avg_spring_final.things[i].longitude), weight:parseInt(obj.weight)});
+    }
+  }
+  heatmapAvgSpringFinalRX.setData(newAvgSpringFinalData);
+}
+
+//********************** Other breaks ***************************
+var intercession = function(data_intecession){
+  console.log(data_intecession.things[0].weight);
+  newIntercessionData = [];
+
+  for(var i = 0; i < data_intecession.things.length; i++) {
+    var obj = data_intecession.things[i];
+
+    if (obj.direction == "rx") {
+      newIntercessionData.push({location:new google.maps.LatLng(data_intecession.things[i].latitude, 
+      data_intecession.things[i].longitude), weight:parseInt(obj.weight)});
+    }
+  }
+  heatmapIntercessionRX.setData(newIntercessionData);
+}
+var winter_break = function(data_winter_break){
+  console.log(data_winter_break.things[0].weight);
+  newWinterBreakData = [];
+
+  for(var i = 0; i < data_winter_break.things.length; i++) {
+    var obj = data_winter_break.things[i];
+
+    if (obj.direction == "rx") {
+      newWinterBreakData.push({location:new google.maps.LatLng(data_winter_break.things[i].latitude, 
+      data_winter_break.things[i].longitude), weight:parseInt(obj.weight)});
+    }
+  }
+  heatmapWinterBreakRX.setData(newWinterBreakData);
+}
+var summer_break = function(data_summer_break){
+  console.log(data_summer_break.things[0].weight);
+  newSummerBreakData = [];
+
+  for(var i = 0; i < data_summer_break.things.length; i++) {
+    var obj = data_summer_break.things[i];
+
+    if (obj.direction == "rx") {
+      newSummerBreakData.push({location:new google.maps.LatLng(data_summer_break.things[i].latitude, 
+      data_summer_break.things[i].longitude), weight:parseInt(obj.weight)});
+    }
+  }
+  heatmapSummerBreakRX.setData(newSummerBreakData);
+}
+//******************** Misc *************************************
+var average_wed4dec2013 = function(data_avg_wed4dec2013){
+  console.log(data_avg_wed4dec2013.things[0].weight);
+  newAvgWeedayData = [];
+
+  for(var i = 0; i < data_avg_wed4dec2013.things.length; i++) {
+    var obj = data_avg_wed4dec2013.things[i];
+
+    if (obj.direction == "rx") {
+      newAvgWeedayData.push({location:new google.maps.LatLng(data_avg_wed4dec2013.things[i].latitude, 
+      data_avg_wed4dec2013.things[i].longitude), weight:parseInt(obj.weight)});
+    }
+  }
+  heatmapAvgWed4Dec2013RX.setData(newAvgWeedayData);
+}
+var average_sat7dec2013 = function(data_avg_sat7dec2013){
+  console.log(data_avg_sat7dec2013.things[0].weight);
+  newAvgWeekendData = [];
+
+  for(var i = 0; i < data_avg_sat7dec2013.things.length; i++) {
+    var obj = data_avg_sat7dec2013.things[i];
+
+    if (obj.direction == "rx") {
+      newAvgWeekendData.push({location:new google.maps.LatLng(data_avg_sat7dec2013.things[i].latitude, 
+      data_avg_sat7dec2013.things[i].longitude), weight:parseInt(obj.weight)});
+    }
+  }
+  heatmapAvgSat7Dec2013RX.setData(newAvgWeekendData);
+}
+var average_year = function(data_avg_year){
+  console.log(data_avg_year.things[0].weight);
+  newAvgYearData = [];
+
+  for(var i = 0; i < data_avg_year.things.length; i++) {
+    var obj = data_avg_year.things[i];
+
+    if (obj.direction == "rx") {
+      newAvgYearData.push({location:new google.maps.LatLng(data_avg_year.things[i].latitude, 
+      data_avg_year.things[i].longitude), weight:parseInt(obj.weight)});
+    }
+  }
+  heatmapAvgYearRX.setData(newAvgYearData);
+}
+//******************* Initialize ********************************
 
 function angelaInitialize() {
   
-  heatmapAvgFallReadRX = new google.maps.visualization.HeatmapLayer({
+  heatmapAvgFallFinalRX = new google.maps.visualization.HeatmapLayer({
     data: heatmapData,
     radius: 35,
+    maxIntensity: 90620657
+  });
+  heatmapAvgFallBreakRX= new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    gradient: color0,
+    maxIntensity: 90620657
+  });
+  heatmapAvgFallMidRX= new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    gradient: color1,
     maxIntensity: 90620657
   });
   heatmapAvgSpringBreakRX= new google.maps.visualization.HeatmapLayer({
     data: heatmapData,
     radius: 35,
+    gradient: color4,
     maxIntensity: 90620657
   });
-  
+  heatmapAvgSpringMidRX= new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    gradient: color3,
+    maxIntensity: 90620657
+  });
+  heatmapAvgSpringFinalRX= new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    maxIntensity: 90620657
+  });
+  heatmapIntercessionRX= new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    gradient: color4,
+    maxIntensity: 90620657
+  });
+  heatmapWinterBreakRX= new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    gradient: color0,
+    maxIntensity: 90620657
+  });
+  heatmapSummerBreakRX= new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    gradient: color1,
+    maxIntensity: 90620657
+  });
+  heatmapAvgWed4Dec2013RX= new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    gradient: color3,
+    maxIntensity: 90620657
+  });
+  heatmapAvgSat7Dec2013RX= new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    gradient: color2,
+    maxIntensity: 90620657
+  });
+  heatmapAvgYearRX= new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    maxIntensity: 90620657
+  });
   $.ajax({
       url: "/angela1",
-      success: average_fall_read,
+      success: average_fall_final,
       contentType: "application/json"
-    })
+  })
   $.ajax({
       url: "/angela2",
       success: average_spring_break,
       contentType: "application/json"
-    })
+  })
+  $.ajax({
+      url: "/angela3",
+      success: average_fall_break,
+      contentType: "application/json"
+  })
+  $.ajax({
+      url: "/angela4",
+      success: average_fall_mid,
+      contentType: "application/json"
+  })
+  $.ajax({
+      url: "/angela5",
+      success: average_spring_mid,
+      contentType: "application/json"
+  })
+  $.ajax({
+      url: "/angela6",
+      success: average_spring_final,
+      contentType: "application/json"
+  })
+  $.ajax({
+      url: "/angela7",
+      success: intercession,
+      contentType: "application/json"
+  })
+  $.ajax({
+      url: "/angela8",
+      success: winter_break,
+      contentType: "application/json"
+  })
+  $.ajax({
+      url: "/angela9",
+      success: summer_break,
+      contentType: "application/json"
+  })
+  $.ajax({
+      url: "/angela10",
+      success: average_wed4dec2013,
+      contentType: "application/json"
+  })
+  $.ajax({
+      url: "/angela12",
+      success: average_sat7dec2013,
+      contentType: "application/json"
+  })
+  $.ajax({
+      url: "/angela13",
+      success: average_year,
+      contentType: "application/json"
+  })
+}
+
+function toggleheatmapAvgFallFinalRX() {
+  heatmapAvgFallFinalRX.setMap(heatmapAvgFallFinalRX.getMap() ? null : map);
+}
+function toggleheatmapAvgFallBreakRX() {
+  heatmapAvgFallBreakRX.setMap(heatmapAvgFallBreakRX.getMap() ? null : map);
+}
+function toggleheatmapAvgFallMidRX() {
+  heatmapAvgFallMidRX.setMap(heatmapAvgFallMidRX.getMap() ? null : map);
 }
 function toggleheatmapAvgSpringBreakRX() {
   heatmapAvgSpringBreakRX.setMap(heatmapAvgSpringBreakRX.getMap() ? null : map);
 }
-function toggleheatmapAvgFallReadRX() {
-  heatmapAvgFallReadRX.setMap(heatmapAvgFallReadRX.getMap() ? null : map);
+function toggleheatmapAvgSpringMidRX() {
+  heatmapAvgSpringMidRX.setMap(heatmapAvgSpringMidRX.getMap() ? null : map);
 }
-
+function toggleheatmapAvgSpringFinalRX() {
+  heatmapAvgSpringFinalRX.setMap(heatmapAvgSpringFinalRX.getMap() ? null : map);
+}
+function toggleheatmapIntercessionRX() {
+  heatmapIntercessionRX.setMap(heatmapIntercessionRX.getMap() ? null : map);
+}
+function toggleheatmapWinterBreakRX() {
+  heatmapWinterBreakRX.setMap(heatmapWinterBreakRX.getMap() ? null : map);
+}
+function toggleheatmapSummerBreakRX() {
+  heatmapSummerBreakRX.setMap(heatmapSummerBreakRX.getMap() ? null : map);
+}
+function toggleheatmapAvgWed4Dec2013RX() {
+  heatmapAvgWed4Dec2013RX.setMap(heatmapAvgWed4Dec2013RX.getMap() ? null : map);
+}
+function toggleheatmapAvgSat7Dec2013RX() {
+  heatmapAvgSat7Dec2013RX.setMap(heatmapAvgSat7Dec2013RX.getMap() ? null : map);
+}
+function toggleheatmapAvgYearRX() {
+  heatmapAvgYearRX.setMap(heatmapAvgYearRX.getMap() ? null : map);
+}
 $(function() {
 
   $( "#slider" ).slider({
@@ -523,13 +809,22 @@ function changeOpacity() {
 }
 
 function clearAll() {
-  heatmapAvgFallBreakR.setMap(null);
-  heatmapAvgFallFinalR.setMap(null);
-  heatmapAvgFallMidR.setMap(null);
-  heatmapAvgSun7Dec2013R.setMap(null);
-  heatmapAvgWed4Dec2013R.setMap(null);
-  heatmapAvgYearR.setMap(null);
-  heatmapAvgYearT.setMap(null);
+  heatmapAvgFallMidRX.setMap(null);
+  heatmapAvgFallBreakRX.setMap(null);
+  heatmapAvgFallFinalRX.setMap(null);
+
+  heatmapWinterBreakRX.setMap(null);
+  heatmapIntercessionRX.setMap(null);
+  heatmapSummerBreakRX.setMap(null);
+
+  heatmapAvgSpringMidRX.setMap(null);
+  heatmapAvgSpringBreakRX.setMap(null);
+  heatmapAvgSpringFinalRX.setMap(null);
+
+  heatmapAvgYearRX.setMap(null);
+
+  heatmapAvgSat7Dec2013RX.setMap(null);
+  heatmapAvgWed4Dec2013RX.setMap(null);
 
   heatmapDownload.setMap(null);
   heatmapUpload.setMap(null);

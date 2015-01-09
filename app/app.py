@@ -37,23 +37,22 @@ class DataObject:
 
 locLookup = dict()
 data = []
-data_avg_mid_fall = []
+data_avg_fall_mid = []
 data_avg_fall_break = []
-data_avg_fall_read = []
 data_avg_fall_final = []
-
-data_avg_sat7dec2013 = []
-data_avg_thu5dec2013 = []
 
 data_avg_spring_mid = []
 data_avg_spring_break = []
-data_avg_spring_read = []
 data_avg_spring_final = []
 
-data_intersession = []
-data_reunions = []
+data_avg_sat7dec2013 = []
+data_avg_wed4dec2013 = []
+
+data_intercession = []
 data_summer_break = []
 data_winter_break = []
+
+data_avg_year = []
 
 def parseCSV( filename, array ):
 	with open(filename, 'r+Ub') as csvfile:
@@ -109,26 +108,38 @@ alldata = 'static/alldata.csv'
 parseCSV(alldata, data)
 
 average_fall_break = 'static/average_fall_break.csv'
-average_fall_read = 'static/average_fall_read.csv'
+average_fall_final = 'static/average_fall_final.csv'
+average_fall_mid = 'static/average_fall_mid.csv'
+
 average_spring_break = 'static/average_spring_break.csv'
 average_spring_final = 'static/average_spring_final.csv'
 average_spring_mid = 'static/average_spring_mid.csv'
-average_spring_read = 'static/average_spring_read.csv'
-intersession = 'static/intersession.csv'
-reunions = 'static/reunions.csv'
+
+intercession = 'static/intersession.csv'
 summer_break = 'static/summer_break.csv'
 winter_break = 'static/winter_break.csv'
 
+average_wed4dec2013 = 'static/average_wed4dec2013.csv'
+average_sat7dec2013 = 'static/average_sat7dec2013.csv'
+
+average_year = 'static/average_year.csv'
+
 parseCSV(average_fall_break, data_avg_fall_break)
-parseCSV(average_fall_read, data_avg_fall_read)
+parseCSV(average_fall_final, data_avg_fall_final)
+parseCSV(average_fall_mid, data_avg_fall_mid)
+
 parseCSV(average_spring_break, data_avg_spring_break)
 parseCSV(average_spring_final, data_avg_spring_final)
 parseCSV(average_spring_mid, data_avg_spring_mid)
-parseCSV(average_spring_read, data_avg_spring_read)
-parseCSV(intersession, data_intersession)
-parseCSV(reunions, data_reunions)
+
+parseCSV(intercession, data_intercession)
 parseCSV(summer_break, data_summer_break)
 parseCSV(winter_break, data_winter_break)
+
+parseCSV(average_wed4dec2013, data_avg_wed4dec2013)
+parseCSV(average_sat7dec2013, data_avg_sat7dec2013)
+
+parseCSV(average_year, data_avg_year)
 
 @app.route("/")
 def index():
@@ -141,31 +152,40 @@ def getlocations(time):
 
 @app.route("/angela1", methods=["GET"])
 def angela1():
-	return jsonify(things = [y.serialize(0) for y in data_avg_fall_read])
+	return jsonify(things = [y.serialize(0) for y in data_avg_fall_final])
 @app.route("/angela2", methods=["GET"])
 def angela2():
 	return jsonify(things = [z.serialize(0) for z in data_avg_spring_break])
 @app.route("/angela3", methods=["GET"])
 def angela3():
-	return jsonify(things = [a.serialize(0) for a in data_avg_spring_final])
+	return jsonify(things = [a.serialize(0) for a in data_avg_fall_break])
 @app.route("/angela4", methods=["GET"])
 def angela4():
-	return jsonify(things = [b.serialize(0) for b in data_avg_spring_mid])
+	return jsonify(things = [b.serialize(0) for b in data_avg_fall_mid])
 @app.route("/angela5", methods=["GET"])
 def angela5():
-	return jsonify(things = [c.serialize(0) for c in data_avg_spring_read])
+	return jsonify(things = [b.serialize(0) for b in data_avg_spring_mid])
 @app.route("/angela6", methods=["GET"])
 def angela6():
-	return jsonify(things = [d.serialize(0) for d in data_intersession])
+	return jsonify(things = [b.serialize(0) for b in data_avg_spring_final])
 @app.route("/angela7", methods=["GET"])
 def angela7():
-	return jsonify(things = [e.serialize(0) for e in data_reunions])
+	return jsonify(things = [b.serialize(0) for b in data_intercession])
 @app.route("/angela8", methods=["GET"])
 def angela8():
-	return jsonify(things = [f.serialize(0) for f in data_summer_break])
-@app.route("/angela8", methods=["GET"])
+	return jsonify(things = [b.serialize(0) for b in data_winter_break])
+@app.route("/angela9", methods=["GET"])
 def angela9():
-	return jsonify(things = [g.serialize(0) for g in data_winter_break])
+	return jsonify(things = [b.serialize(0) for b in data_summer_break])
+@app.route("/angela10", methods=["GET"])
+def angela10():
+	return jsonify(things = [b.serialize(0) for b in data_avg_wed4dec2013])
+@app.route("/angela12", methods=["GET"])
+def angela12():
+	return jsonify(things = [c.serialize(0) for c in data_avg_sat7dec2013])	
+@app.route("/angela13", methods=["GET"])
+def angela13():
+	return jsonify(things = [c.serialize(0) for c in data_avg_year])	
 
 
 @app.route("/lookup", methods=["GET"])
