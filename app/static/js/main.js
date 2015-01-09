@@ -1,6 +1,6 @@
 var map;
 var heatmap;
-var day = moment(new Date(2013, 0, 1)); //January 1st 2013
+var day = moment(new Date(2013, 11, 1)); //December 1st 2013
 
 var currentTime = 0;
 var newSpeed = 1000; //currentSpeed
@@ -834,7 +834,7 @@ $(function() {
   } );
 
   $( "#datepicker" ).datepicker({
-    defaultDate:"01/01/2013",
+    defaultDate:"12/01/2013",
     yearRange: "2013:2014",
     onSelect: function(date) {
       var selected = moment(date, "MM/DD/YYYY");
@@ -900,6 +900,7 @@ $(function() {
 
     $('#upload').iCheck('enable');
     $('#download').iCheck('enable');
+
     $('#upload').iCheck('check');
     $('#download').iCheck('check');
 
@@ -1152,7 +1153,7 @@ function redraw(counter, speed) {
     })
 
     var timeDiv = document.getElementById("timeText");
-    timeDiv.textContent = moment(new Date(2013, 0, 1)).add(counter, 'hours').format("dddd, MMM Do YYYY, h:mm a");;
+    timeDiv.textContent = moment(new Date(2013, 11, 1)).add(counter, 'hours').format("dddd, MMM Do YYYY, h:mm a");;
 
   }, speed);
 }
@@ -1167,7 +1168,7 @@ function redrawOnce(counter) {
     });
 
    var timeDiv = document.getElementById("timeText");
-   timeDiv.textContent = moment(new Date(2013, 0, 1)).add(counter, 'hours').format("dddd, MMM Do YYYY, h:mm a");;
+   timeDiv.textContent = moment(new Date(2013, 11, 1)).add(counter, 'hours').format("dddd, MMM Do YYYY, h:mm a");;
 }
 
 function toggleHeatmapDownload() {
@@ -1212,7 +1213,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 google.maps.event.addDomListener(window, 'load', 
   $(function() {
   var timeDiv = document.getElementById("timeText");
-  timeDiv.textContent = moment(new Date(2013, 0, 1)).format("dddd, MMM Do YYYY, h:mm a");
+  timeDiv.textContent = moment(new Date(2013, 11, 1)).format("dddd, MMM Do YYYY, h:mm a");
 
   $.ajax({
       url: "/getlocations/" + 0,
