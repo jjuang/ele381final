@@ -711,57 +711,92 @@ function initialize() {
   heatmapAll.setMap(map);
 }
 
-function angelaInitialize() {
-    var hpAvgFallBreakRData = new google.maps.MVCArray(AvgFallBreakRData);
-   var hpAvgFallFinalRData = new google.maps.MVCArray(AvgFallFinalRData);
-   var hpAvgFallMidRData = new google.maps.MVCArray(AvgFallMidRData);
-   var hpAvgSun7Dec2013RData = new google.maps.MVCArray(AvgSun7Dec2013RData);
-   var hpAvgWed4Dec2013RData = new google.maps.MVCArray(AvgWed4Dec2013RData);
-   var hpAvgYearRData = new google.maps.MVCArray(AvgYearRData);
-   var hpAvgYearTData = new google.maps.MVCArray(AvgYearTData);
-    heatmapAvgFallBreakR = new google.maps.visualization.HeatmapLayer({
-    data: hpAvgFallBreakRData,
-    radius: 35,
-    gradient: color0,
-    maxIntensity: 90620657
-   });
-    heatmapAvgFallFinalR = new google.maps.visualization.HeatmapLayer({
-    data: hpAvgFallFinalRData,
-    radius: 35,
-    gradient: color1,
-    maxIntensity: 90620657
-   });
-    heatmapAvgFallMidR = new google.maps.visualization.HeatmapLayer({
-    data: hpAvgFallMidRData,
-    radius: 35,
-    gradient: color2,
-    maxIntensity: 90620657
-   });
-    heatmapAvgSun7Dec2013R = new google.maps.visualization.HeatmapLayer({
-    data: hpAvgSun7Dec2013RData,
-    radius: 35,
-    gradient: color3,
-    maxIntensity: 90620657
-   });
-    heatmapAvgWed4Dec2013R = new google.maps.visualization.HeatmapLayer({
-    data: hpAvgWed4Dec2013RData,
-    radius: 35,
-    gradient: color4,
-    maxIntensity: 90620657
-   });
-    //this one uses default colors
-    heatmapAvgYearR = new google.maps.visualization.HeatmapLayer({
-    data: hpAvgYearRData,
-    radius: 35,
-    maxIntensity: 90620657
-   });
-    heatmapAvgYearT = new google.maps.visualization.HeatmapLayer({
-    data: hpAvgYearTData,
-    radius: 35,
-    gradient: uploadGradient,
-    maxIntensity: 90620657
-   });
+//angela's data part 2
+var test2 = function(data_avg_fall_read){
+  console.log(data_avg_fall_read.things[0].weight);
+  newAvgFallReadData = [];
+
+  for(var i = 0; i < data_avg_fall_read.things.length; i++) {
+    var obj = data_avg_fall_read.things[i];
+
+    if (obj.direction == "rx") {
+      newAvgFallReadData.push({location:new google.maps.LatLng(data_avg_fall_read.things[i].latitude, 
+      data_avg_fall_read.things[i].longitude), weight:parseInt(obj.weight)});
+    }
   }
+
+  heatmapAvgFallReadRX.setData(newAvgFallReadData);
+} 
+
+function angelaInitialize() {
+  
+  // var hpAvgFallBreakRData = new google.maps.MVCArray(AvgFallBreakRData);
+  // var hpAvgFallFinalRData = new google.maps.MVCArray(AvgFallFinalRData);
+  // var hpAvgFallMidRData = new google.maps.MVCArray(AvgFallMidRData);
+  // var hpAvgSun7Dec2013RData = new google.maps.MVCArray(AvgSun7Dec2013RData);
+  // var hpAvgWed4Dec2013RData = new google.maps.MVCArray(AvgWed4Dec2013RData);
+  // var hpAvgYearRData = new google.maps.MVCArray(AvgYearRData);
+  // var hpAvgYearTData = new google.maps.MVCArray(AvgYearTData);
+
+  heatmapAvgFallReadRX = new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    radius: 35,
+    maxIntensity: 90620657
+  });
+
+  $.ajax({
+      url: "/angela1",
+      success: test2,
+      contentType: "application/json"
+    })
+
+  // heatmapAvgFallBreakR = new google.maps.visualization.HeatmapLayer({
+  //   data: hpAvgFallBreakRData,
+  //   radius: 35,
+  //   gradient: color0,
+  //   maxIntensity: 90620657
+  // });
+  // heatmapAvgFallFinalR = new google.maps.visualization.HeatmapLayer({
+  //   data: hpAvgFallFinalRData,
+  //   radius: 35,
+  //   gradient: color1,
+  //   maxIntensity: 90620657
+  // });
+  // heatmapAvgFallMidR = new google.maps.visualization.HeatmapLayer({
+  //   data: hpAvgFallMidRData,
+  //   radius: 35,
+  //   gradient: color2,
+  //   maxIntensity: 90620657
+  // });
+  // heatmapAvgSun7Dec2013R = new google.maps.visualization.HeatmapLayer({
+  // data: hpAvgSun7Dec2013RData,
+  // radius: 35,
+  // gradient: color3,
+  // maxIntensity: 90620657
+  // });
+  // heatmapAvgWed4Dec2013R = new google.maps.visualization.HeatmapLayer({
+  // data: hpAvgWed4Dec2013RData,
+  // radius: 35,
+  // gradient: color4,
+  // maxIntensity: 90620657
+  // });
+  // //this one uses default colors
+  // heatmapAvgYearR = new google.maps.visualization.HeatmapLayer({
+  // data: hpAvgYearRData,
+  // radius: 35,
+  // maxIntensity: 90620657
+  // });
+  // heatmapAvgYearT = new google.maps.visualization.HeatmapLayer({
+  // data: hpAvgYearTData,
+  // radius: 35,
+  // gradient: uploadGradient,
+  // maxIntensity: 90620657
+  // });
+}
+
+function toggleheatmapAvgFallReadRX() {
+  heatmapAvgFallReadRX.setMap(heatmapAvgFallReadRX.getMap() ? null : map);
+}
 function toggleHeatmapAvgFallBreakR() {
   heatmapAvgFallBreakR.setMap(heatmapAvgFallBreakR.getMap() ? null : map);
 }
@@ -1068,8 +1103,6 @@ var test = function(data){
   heatmapLibrary.setData(newLibData);
   heatmapEating.setData(newEatData);
 } 
-
-
 
 var prevInterval;
 
