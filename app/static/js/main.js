@@ -874,6 +874,10 @@ $(function() {
   });
 
   $('#radio_all').on('ifChecked', function(event){
+
+    $('#upload').iCheck('disable');
+    $('#download').iCheck('disable');
+
     heatmapUpload.setMap(null);
     heatmapDownload.setMap(null);
 
@@ -893,6 +897,11 @@ $(function() {
 
   $('#radio_transfer').on('ifChecked', function(event){
     heatmapAll.setMap(null);
+
+    $('#upload').iCheck('enable');
+    $('#download').iCheck('enable');
+    $('#upload').iCheck('check');
+    $('#download').iCheck('check');
 
     heatmapAcademic.setMap(null);
     heatmapResidential.setMap(null);
@@ -914,15 +923,37 @@ $(function() {
     heatmapUpload.setMap(null);
     heatmapDownload.setMap(null);
 
+    $('#upload').iCheck('disable');
+    $('#download').iCheck('disable');
+
     $('#academic').iCheck('enable');
     $('#residential').iCheck('enable');
     $('#library').iCheck('enable');
     $('#eating').iCheck('enable');
 
+    $('#academic').iCheck('check');
+    $('#residential').iCheck('check');
+    $('#library').iCheck('check');
+    $('#eating').iCheck('check');
+
     heatmapAcademic.setMap(map);
     heatmapResidential.setMap(map);
     heatmapLibrary.setMap(map);
     heatmapEating.setMap(map);
+  });
+
+  $('#upload').on('ifChecked', function(event){
+    heatmapUpload.setMap(map);
+  });
+  $('#upload').on('ifUnchecked', function(event){
+    heatmapUpload.setMap(null);
+  });
+
+  $('#download').on('ifChecked', function(event){
+    heatmapDownload.setMap(map);
+  });
+  $('#download').on('ifUnchecked', function(event){
+    heatmapDownload.setMap(null);
   });
 
   $('#academic').on('ifChecked', function(event){
